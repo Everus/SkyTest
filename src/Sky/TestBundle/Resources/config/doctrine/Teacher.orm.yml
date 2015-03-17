@@ -1,0 +1,19 @@
+Sky\TestBundle\Entity\Teacher:
+    type: entity
+    table: null
+    repositoryClass: Sky\TestBundle\Entity\TeacherRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+    manyToMany:
+      students:
+        targetEntity: Student
+        mappedBy: teachers
+    lifecycleCallbacks: {  }
