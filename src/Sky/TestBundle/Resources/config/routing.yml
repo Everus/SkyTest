@@ -1,3 +1,14 @@
 sky_test_homepage:
-    path:     /hello/{name}
-    defaults: { _controller: SkyTestBundle:Default:index }
+    path:     /{page}/{pageSize}
+    defaults: { _controller: SkyTestBundle:Default:index, page: 1, pageSize: 10  }
+    requirements:
+        page:  \d+
+        pageSize: \d+
+
+sky_test_student:
+    resource: "@SkyTestBundle/Resources/config/routing/student.yml"
+    prefix: /student/
+
+sky_test_teacher:
+    resource: "@SkyTestBundle/Resources/config/routing/teacher.yml"
+    prefix: /teacher/

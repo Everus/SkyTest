@@ -1,0 +1,9 @@
+new:
+    path: /new
+    defaults: { _controller: SkyTestBundle:Student:new  }
+
+index:
+    path: /{id}
+    defaults: { _controller: SkyTestBundle:Student:index  }
+    requirements:
+        id:  \d+

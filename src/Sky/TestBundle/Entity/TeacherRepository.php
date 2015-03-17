@@ -3,6 +3,7 @@
 namespace Sky\TestBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * TeacherRepository
@@ -12,4 +13,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class TeacherRepository extends EntityRepository
 {
+    public function findAllPage(&$page = 1, &$pageSize = 10)
+    {
+        $query = "SELECT t FROM SkyTestBundle:Teacher t";
+        $query = $this->getEntityManager()
+            ->createQuery($query)
+            ->setFirstResult($pageSize * ($page - 1))
+            ->setMaxResults($pageSize);
+
+        return new Paginator($query);
+    }
 }

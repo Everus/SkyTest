@@ -1,0 +1,23 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+        {% block title %}
+        Sky | Welcome
+        {% endblock %}
+    </title>
+    <link rel="stylesheet" href={{ asset('bundles/skytest/css/foundation.css') }} />
+    <script src={{ asset('bundles/skytest/js/vendor/modernizr.js') }}></script>
+</head>
+<body>
+{% block body %}
+{% endblock %}
+<script src={{ asset('bundles/skytest/js/vendor/jquery.js') }}></script>
+<script src={{ asset('bundles/skytest/js/foundation.min.js') }}></script>
+<script>
+    $(document).foundation();
+</script>
+</body>
+</html>
