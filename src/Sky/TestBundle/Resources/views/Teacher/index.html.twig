@@ -1,0 +1,16 @@
+{% extends 'SkyTestBundle::layout.html.twig' %}
+
+{% block body %}
+    <div class="large-12 columns">
+        <div class="row">
+
+        </div>
+        <div>
+            {% for Studetn in Teacher.students.iterator %}
+                {{ Sturent.name }}
+            {% else %}
+                <p>У этого учителя нет учеников, хотите добавить?</p>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

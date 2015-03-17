@@ -23,10 +23,17 @@ class DefaultController extends Controller
             ->getRepository('SkyTestBundle:Teacher')
             ->findAllPage($page, $pageSize);
 
+        $count = count($teachers);
+
         if(count($teachers) == 0) {
             return $this->render('SkyTestBundle::Teacher\empty.html.twig');
         }
-
-        return $this->render('SkyTestBundle::index.html.twig', array('Teachers' => $teachers));
+        $data = array(
+            'Teachers' => $teachers,
+            'Count' => $count,
+            'Page' => $page,
+            'PageSize' => $pageSize,
+        );
+        return $this->render('SkyTestBundle::index.html.twig', $data);
     }
 }

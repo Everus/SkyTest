@@ -5,10 +5,26 @@
         <div class="large-12 columns">
             {% for Teacher in Teachers.iterator %}
                 <div class="row">
-                    {{ Teacher.name }}
-                    {{ Teacher.students.count }}
+                    <p>
+                        <a href="{{ path('sky_test_teacher_index', {'id': Teacher.id}) }}">{{ Teacher.name }}</a>
+                        {{ Teacher.students.count }}
+                    </p>
                 </div>
             {% endfor %}
+            <div class="row">
+                <p>Всего учителей в базе: {{ Count }}</p>
+                Страница: {{ Page  }} из {{ Count // PageSize + 1 }}
+                {% for i in 1..(Count // PageSize + 1) %}
+                    {% if Page == i %}
+                        {{ i }}
+                    {% else %}
+                        <a href="{{ path('sky_test_homepage', {'page': i, 'pageSize': PageSize}) }}">
+                            {{ i }}
+                        </a>
+                    {% endif %}
+                {% endfor %}
+            </div>
         </div>
     </div>
+
 {% endblock %}

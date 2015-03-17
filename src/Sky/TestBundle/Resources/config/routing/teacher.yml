@@ -1,8 +1,8 @@
-new:
+sky_test_teacher_new:
     path: /new
     defaults: { _controller: SkyTestBundle:Teacher:new  }
 
-index:
+sky_test_teacher_index:
     path: /{id}
     defaults: { _controller: SkyTestBundle:Teacher:index  }
     requirements:
