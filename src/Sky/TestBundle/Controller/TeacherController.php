@@ -19,7 +19,7 @@ class TeacherController extends Controller
 
         return $this->render('SkyTestBundle:Teacher:index.html.twig',
             array(
-                'Teacher' => $teacher
+                'teacher' => $teacher
             ));
     }
 
@@ -45,7 +45,7 @@ class TeacherController extends Controller
     }
 
     public function linkAction($id, $page, $search) {
-        $em = $this->getDoctrine();
+        $em = $this->getDoctrine()->getEntityManager();
         $teacher = $em
             ->getRepository('SkyTestBundle:Teacher')
             ->find($id);
@@ -55,8 +55,16 @@ class TeacherController extends Controller
         }
 
         $query = '
-            SELECT s FROM SkyTestBundle:Student s
-            WHERE NOT EXISTS (SELECT st.student_id FROM student_teacher st WHERE st.student_id = s.id AND st.teacher_id = '.$teacher->getId().')';
+            SELECT s
+            FROM SkyTestBundle:Student s
+            WHERE
+            NOT EXISTS (
+                SELECT t
+                FROM SkyTestBundle:Teacher t
+                WHERE t.id = :teacherId
+                AND t MEMBER OF s.teachers)';
+
+        $query  = $em->createQuery($query)->setParameter('teacherId', $teacher->getId());
 
         $students = $this->get('pager')->paginate($query, $page);
 

@@ -5,12 +5,6 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 
 class Pager {
 
-    protected $em;
-
-    public function __construct($em) {
-        $this->em = $em;
-    }
-
     public function paginate($query, &$page = 1, &$pageSize = 10) {
         $pageSize = (int)$pageSize;
         $page = (int)$page;
@@ -23,8 +17,7 @@ class Pager {
             $page = 1;
         }
 
-        $query = $this->em
-            ->createQuery($query)
+        $query
             ->setFirstResult($pageSize * ($page - 1))
             ->setMaxResults($pageSize);
 

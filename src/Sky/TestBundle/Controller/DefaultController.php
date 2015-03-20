@@ -12,6 +12,11 @@ class DefaultController extends Controller
                 SELECT t
                 FROM SkyTestBundle:Teacher t';
 
+        $query = $this
+            ->getDoctrine()
+            ->getEntityManager()
+            ->createQuery($query);
+
 
         $teachers = $this->get('pager')->paginate($query, $page, $pageSize);
 

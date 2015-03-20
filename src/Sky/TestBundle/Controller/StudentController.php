@@ -69,7 +69,7 @@ class StudentController extends Controller
     }
 
     public function linkAction($id, $page, $search) {
-        $em = $this->getDoctrine();
+        $em = $this->getDoctrine()->getEntityManager();
         $student = $em
             ->getRepository('SkyTestBundle:Student')
             ->find($id);
@@ -81,8 +81,15 @@ class StudentController extends Controller
         $query = '
             SELECT t
             FROM SkyTestBundle:Teacher t
-            WHERE NOT EXISTS (SELECT s.student_id FROM student_teacher s WHERE s.teacher_id = t.id AND s.student_id = '.$student->getId().' )';
+            WHERE
+            NOT EXISTS (
+                SELECT s
+                FROM SkyTestBundle:Student
+                WHERE s.id = :studentId
+                AND s MEMBER OF t.students
+            )';
 
+        $query = $em->createQuery($query)->setParameter('studentId', $student->getId());
         $teachers = $this->get('pager')->paginate($query, $page);
 
         return $this->render('SkyTestBundle:Student:link.html.twig', array(
