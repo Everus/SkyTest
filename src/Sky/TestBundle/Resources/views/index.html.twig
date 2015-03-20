@@ -1,19 +1,36 @@
 {% extends 'SkyTestBundle::layout.html.twig' %}
 
+{% block title %}
+    Sky | Система учета | Список учителей
+{% endblock %}
+
 {% block body %}
     <div class="row">
         <div class="large-12 columns">
-            {% for teacher in teachers.iterator %}
-                <div class="row">
-                    <p>
-                        <a href="{{ path('sky_test_teacher_index', {'id': teacher.id}) }}">{{ teacher.name }}</a>
-                        {{ teacher.students.count }}
-                    </p>
-                </div>
-            {% endfor %}
-            <div class="row">
+            <h3>Добро пожаловать в систему учёта.</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-10 columns">
+            <div class="">
+                <table>
+                    <caption>Список учителей:</caption>
+                    <thead>
+                        <tr>
+                            <th width="300">Имя учителя</th>
+                            <th>Количество учеников</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                {% for teacher in teachers.iterator %}
+                    <tr>
+                        <td><a href="{{ path('sky_test_teacher_index', {'id': teacher.id}) }}">{{ teacher.name }}</a></td>
+                        <td>{{ teacher.students.count }}</td>
+                    </tr>
+                {% endfor %}
+                    </tbody>
+                </table>
                 <p>Всего учителей в базе: {{ count }}</p>
-                Страница: {{ page  }} из {{ count // pageSize + 1 }}
                 {% for i in 1..(count // pageSize + 1) %}
                     {% if page == i %}
                         {{ i }}
@@ -24,6 +41,11 @@
                     {% endif %}
                 {% endfor %}
             </div>
+        </div>
+        <div class="large-2 columns">
+            <a href="{{ path('sky_test_teacher_new') }}" class="small button">Добавить учителя</a>
+            <a href="{{ path('sky_test_student_new') }}" class="small button">Добавить ученика</a>
+            <a href="" class="small button">Перейти к списку учеников</a>
         </div>
     </div>
 {% endblock %}
