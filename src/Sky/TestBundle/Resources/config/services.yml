@@ -1,5 +1,5 @@
 services:
-    sky_test.pager:
+    pager:
         class: Sky\TestBundle\Pager\Pager
         arguments: [ @doctrine.orm.entity_manager ]
 #    sky_test.example:
