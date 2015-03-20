@@ -1,4 +1,11 @@
 {% extends 'SkyTestBundle::layout.html.twig' %}
 
 {% block body %}
+    <div class="row">
+        {% for student in students.iterator %}
+            {{ student.name }}
+        {% else %}
+            <p>Этот учитель обучает всех возможных учеников <a href="{{ path('sky_test_student_new') }}">хотите создать нового ученика?</a></p>
+        {% endfor %}
+    </div>
 {% endblock %}

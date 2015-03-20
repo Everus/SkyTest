@@ -12,6 +12,36 @@
     <script src={{ asset('bundles/skytest/js/vendor/modernizr.js') }}></script>
 </head>
 <body>
+<div class="contain-to-grid sticky">
+    <nav class="top-bar" data-topbar role="navigation">
+        <ul class="title-area">
+            <li class="name">
+                <h1><a href="#">{% block page_name %}Sky{% endblock %}</a></h1>
+            </li>
+        </ul>
+
+        <section class="top-bar-section">
+            {% block navigation %}
+            <ul class="right">
+                <li class="has-dropdown">
+                    <a>Учителя</a>
+                    <ul class="dropdown">
+                        <li><a href="{{ path('sky_test_homepage') }}">Список</a></li>
+                        <li><a href="{{ path('sky_test_teacher_new') }}">Создать</a></li>
+                    </ul>
+                </li>
+                <li class="has-dropdown">
+                    <a>Ученики</a>
+                    <ul class="dropdown">
+                        <li><a href="#">Список</a></li>
+                        <li><a href="{{ path('sky_test_student_new') }}">Создать</a></li>
+                    </ul>
+                </li>
+            </ul>
+            {% endblock %}
+        </section>
+    </nav>
+</div>
 {% block body %}
 {% endblock %}
 <script src={{ asset('bundles/skytest/js/vendor/jquery.js') }}></script>

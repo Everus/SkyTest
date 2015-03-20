@@ -12,7 +12,7 @@ sky_test_teacher_link_create:
 
 sky_test_teacher_link:
     path: /{id}/link/{page}/{search}
-    defaults: { _controller: SkyTestBundle:Student:link, page: 1, search: '' }
+    defaults: { _controller: SkyTestBundle:Teacher:link, page: 1, search: '' }
     requirements:
         id:  \d+
         page: \d+

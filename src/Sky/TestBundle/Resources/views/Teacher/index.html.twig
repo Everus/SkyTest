@@ -5,11 +5,11 @@
         <div class="row">
 
         </div>
-        <div>
-            {% for Studetn in Teacher.students.iterator %}
-                {{ Sturent.name }}
+        <div class="row">
+            {% for student in teacher.students.iterator %}
+                {{ sturent.name }}
             {% else %}
-                <p>У этого учителя нет учеников, хотите добавить?</p>
+                <p>У этого учителя нет учеников, <a href="{{ path('sky_test_teacher_link', {'id': teacher.id}) }}">хотите добавить?</a></p>
             {% endfor %}
         </div>
     </div>

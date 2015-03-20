@@ -6,8 +6,8 @@
 
         </div>
         <div>
-            {% for Teacher in Student.teachers.iterator %}
-                {{ Teacher.name }}
+            {% for teacher in student.teachers.iterator %}
+                {{ teacher.name }}
             {% else %}
                 <p>У этого ученика нет учителей, хотите добавить?</p>
             {% endfor %}

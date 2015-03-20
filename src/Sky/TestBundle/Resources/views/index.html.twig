@@ -11,7 +11,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="large-10 columns">
+        <div class="large-12 columns">
             <div class="">
                 <table>
                     <caption>Список учителей:</caption>
@@ -31,21 +31,18 @@
                     </tbody>
                 </table>
                 <p>Всего учителей в базе: {{ count }}</p>
-                {% for i in 1..(count // pageSize + 1) %}
-                    {% if page == i %}
-                        {{ i }}
-                    {% else %}
-                        <a href="{{ path('sky_test_homepage', {'page': i, 'pageSize': pageSize}) }}">
+                {% if count > pageSize %}
+                    {% for i in 1..(count // pageSize + 1) %}
+                        {% if page == i %}
                             {{ i }}
-                        </a>
-                    {% endif %}
-                {% endfor %}
+                        {% else %}
+                            <a href="{{ path('sky_test_homepage', {'page': i, 'pageSize': pageSize}) }}">
+                                {{ i }}
+                            </a>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
             </div>
-        </div>
-        <div class="large-2 columns">
-            <a href="{{ path('sky_test_teacher_new') }}" class="small button">Добавить учителя</a>
-            <a href="{{ path('sky_test_student_new') }}" class="small button">Добавить ученика</a>
-            <a href="" class="small button">Перейти к списку учеников</a>
         </div>
     </div>
 {% endblock %}

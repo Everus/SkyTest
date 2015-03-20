@@ -1,7 +1,22 @@
 {% extends 'SkyTestBundle::layout.html.twig' %}
 
+{% block title %}
+    Sky | Система учета | Добавление учителя
+{% endblock %}
+
 {% block body %}
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    {{ form_end(form) }}
+    <div class="row">
+        <div class="large-12 columns">
+            <h3>Создание нового учителя.</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="medium-6 columns">
+            <div class="row">
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
 {% endblock %}
