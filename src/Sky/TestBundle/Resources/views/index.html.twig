@@ -3,22 +3,22 @@
 {% block body %}
     <div class="row">
         <div class="large-12 columns">
-            {% for Teacher in Teachers.iterator %}
+            {% for teacher in teachers.iterator %}
                 <div class="row">
                     <p>
-                        <a href="{{ path('sky_test_teacher_index', {'id': Teacher.id}) }}">{{ Teacher.name }}</a>
-                        {{ Teacher.students.count }}
+                        <a href="{{ path('sky_test_teacher_index', {'id': teacher.id}) }}">{{ teacher.name }}</a>
+                        {{ teacher.students.count }}
                     </p>
                 </div>
             {% endfor %}
             <div class="row">
-                <p>Всего учителей в базе: {{ Count }}</p>
-                Страница: {{ Page  }} из {{ Count // PageSize + 1 }}
-                {% for i in 1..(Count // PageSize + 1) %}
-                    {% if Page == i %}
+                <p>Всего учителей в базе: {{ count }}</p>
+                Страница: {{ page  }} из {{ count // pageSize + 1 }}
+                {% for i in 1..(count // pageSize + 1) %}
+                    {% if page == i %}
                         {{ i }}
                     {% else %}
-                        <a href="{{ path('sky_test_homepage', {'page': i, 'pageSize': PageSize}) }}">
+                        <a href="{{ path('sky_test_homepage', {'page': i, 'pageSize': pageSize}) }}">
                             {{ i }}
                         </a>
                     {% endif %}
@@ -26,5 +26,4 @@
             </div>
         </div>
     </div>
-
 {% endblock %}

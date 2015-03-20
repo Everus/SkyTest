@@ -8,20 +8,12 @@ class DefaultController extends Controller
 {
     public function indexAction($page = 1, $pageSize = 10)
     {
-        $pageSize = (int)$pageSize;
-        $page = (int)$page;
+        $query = '
+                SELECT t
+                FROM SkyTestBundle:Teacher t';
 
-        if( $pageSize < 1 ){
-            $pageSize = 10;
-        }
 
-        if( $page < 1 ){
-            $page = 1;
-        }
-
-        $teachers = $this->getDoctrine()
-            ->getRepository('SkyTestBundle:Teacher')
-            ->findAllPage($page, $pageSize);
+        $teachers = $this->get('pager')->paginate($query, $page, $pageSize);
 
         $count = count($teachers);
 
@@ -29,10 +21,10 @@ class DefaultController extends Controller
             return $this->render('SkyTestBundle::Teacher\empty.html.twig');
         }
         $data = array(
-            'Teachers' => $teachers,
-            'Count' => $count,
-            'Page' => $page,
-            'PageSize' => $pageSize,
+            'teachers' => $teachers,
+            'count' => $count,
+            'page' => $page,
+            'pageSize' => $pageSize,
         );
         return $this->render('SkyTestBundle::index.html.twig', $data);
     }

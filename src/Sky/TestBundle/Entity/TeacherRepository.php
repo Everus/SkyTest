@@ -3,7 +3,6 @@
 namespace Sky\TestBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * TeacherRepository
@@ -13,14 +12,22 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  */
 class TeacherRepository extends EntityRepository
 {
-    public function findAllPage(&$page = 1, &$pageSize = 10)
+    public function findRandom()
     {
-        $query = "SELECT t FROM SkyTestBundle:Teacher t";
-        $query = $this->getEntityManager()
-            ->createQuery($query)
-            ->setFirstResult($pageSize * ($page - 1))
-            ->setMaxResults($pageSize);
+        $em = $this->getEntityManager();
+        $rows = $em->createQuery('
+                SELECT COUNT(t.id)
+                FROM SkyTestBundle:Teacher t')
+            ->getSingleScalarResult();
 
-        return new Paginator($query);
+        $offset = max(0, rand(0, $rows - 2));
+
+        $query = $em->createQuery('
+                SELECT DISTINCT t
+                FROM SkyTestBundle:Teacher t')
+            ->setMaxResults(1)
+            ->setFirstResult($offset);
+
+        return $query->getResult();
     }
 }

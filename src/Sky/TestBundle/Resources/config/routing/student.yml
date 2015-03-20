@@ -2,6 +2,21 @@ sky_test_student_new:
     path: /new
     defaults: { _controller: SkyTestBundle:Student:new  }
 
+sky_test_student_link_create:
+    path: /{id}/link/{page}/{search}/{teacher}
+    defaults: { _controller: SkyTestBundle:Student:linkCreate, page: 1, search: ''  }
+    requirements:
+        id:  \d+
+        page: \d+
+        teacher:  \d+
+
+sky_test_student_link:
+    path: /{id}/link/{page}/{search}
+    defaults: { _controller: SkyTestBundle:Student:link, page: 1, search: '' }
+    requirements:
+        id:  \d+
+        page: \d+
+
 sky_test_student_index:
     path: /{id}
     defaults: { _controller: SkyTestBundle:Student:index  }

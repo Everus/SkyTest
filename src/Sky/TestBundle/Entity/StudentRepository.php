@@ -12,4 +12,22 @@ use Doctrine\ORM\EntityRepository;
  */
 class StudentRepository extends EntityRepository
 {
+    public function findRandom()
+    {
+        $em = $this->getEntityManager();
+        $rows = $em->createQuery('
+                SELECT COUNT(s.id)
+                FROM SkyTestBundle:Student s')
+            ->getSingleScalarResult();
+
+        $offset = max(0, rand(0, $rows - 2));
+
+        $query = $em->createQuery('
+                SELECT DISTINCT s
+                FROM SkyTestBundle:Student s')
+            ->setMaxResults(1)
+            ->setFirstResult($offset);
+
+        return $query->getResult();
+    }
 }
