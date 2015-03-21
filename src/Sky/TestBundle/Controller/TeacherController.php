@@ -67,17 +67,19 @@ class TeacherController extends Controller
         $query  = $em->createQuery($query)->setParameter('teacherId', $teacher->getId());
 
         $students = $this->get('pager')->paginate($query, $page);
+        $count = count($students);
 
         return $this->render('SkyTestBundle:Teacher:link.html.twig', array(
-            'teachers_count' => count($students),
+            'count' => $count,
             'teacher' => $teacher,
             'students' => $students,
             'page' => $page,
-            'search' => $search
+            'search' => $search,
+            'pageSize' => 10
         ));
     }
 
-    public function linkCrateAction($id, $page, $search, $studentId) {
+    public function linkCreateAction($id, $page, $search, $studentId) {
         $em = $this->getDoctrine()->getManager();
         $teacher = $em->getRepository('SkyTestBundle:Teacher')
             ->find($id);
@@ -105,5 +107,95 @@ class TeacherController extends Controller
             'page' => $page,
             'search' => $search
         ));
+    }
+
+    public function unlinkAction($id, $studentId) {
+        $em = $this->getDoctrine()->getManager();
+
+        $teacher = $em
+            ->getRepository('SkyTestBundle:Teacher')
+            ->find($id);
+        $student = $em
+            ->getRepository('SkyTestBundle:Student')
+            ->find($studentId);
+
+        if(!$teacher) {
+            throw $this->createNotFoundException('Запрошенный учитель не найден.');
+        }
+
+        if($student) {
+            $student->removeTeacher($teacher);
+            $em->persist($teacher);
+            $em->persist($student);
+            $em->flush();
+        }
+        return $this->redirectToRoute('sky_test_teacher_index', array(
+            'id' => $teacher->getId()
+        ));
+    }
+
+    public function listAction($page = 1, $pageSize = 10)
+    {
+        $query = '
+                SELECT t
+                FROM SkyTestBundle:Teacher t';
+
+        $query = $this
+            ->getDoctrine()
+            ->getManager()
+            ->createQuery($query);
+
+
+        $teachers = $this->get('pager')->paginate($query, $page, $pageSize);
+
+        $count = count($teachers);
+
+        $data = array(
+            'teachers' => $teachers,
+            'count' => $count,
+            'page' => $page,
+            'pageSize' => $pageSize,
+        );
+        return $this->render('SkyTestBundle::index.html.twig', $data);
+    }
+
+    public function editAction($id, Request $request) {
+        $em = $this->getDoctrine()->getManager();
+
+        $teacher = $em
+            ->getRepository('SkyTestBundle:Teacher')
+            ->find($id);
+
+        if(!$teacher) {
+            throw $this->createNotFoundException('Запрошенный учитель не найден.');
+        }
+
+        $form = $this->createForm(new TeacherType(), $teacher);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($teacher);
+            $em->flush();
+
+            return $this->redirectToRoute('sky_test_teacher_index', array(
+                'id' => $teacher->getId()
+            ));
+        }
+        return $this->render('SkyTestBundle:Teacher:edit.html.twig', array(
+            'form' => $form->createView()
+        ));
+    }
+
+    public function deleteAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $teacher = $em
+            ->getRepository('SkyTestBundle:Teacher')
+            ->find($id);
+        $em->remove($teacher);
+        $em->flush();
+
+        return $this->redirectToRoute('sky_test_teacher_list');
     }
 } 

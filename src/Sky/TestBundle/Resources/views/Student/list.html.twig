@@ -1,13 +1,13 @@
 {% extends 'SkyTestBundle::layout.html.twig' %}
 
 {% block title %}
-    Sky | Система учета | Список учителей
+    Sky | Система учета | Список учеников
 {% endblock %}
 
 {% block body %}
     <div class="row">
         <div class="large-12 columns">
-            <h3>Добро пожаловать в систему учёта.</h3>
+            <h3>Список учеников</h3>
         </div>
     </div>
     <div class="row">
@@ -16,21 +16,21 @@
                 <table>
                     <caption>Список учителей:</caption>
                     <thead>
-                        <tr>
-                            <th width="300">Имя учителя</th>
-                            <th>Количество учеников</th>
-                        </tr>
+                    <tr>
+                        <th width="300">Имя ученика</th>
+                        <th>Количество учителей</th>
+                    </tr>
                     </thead>
                     <tbody>
-                {% for teacher in teachers.iterator %}
-                    <tr>
-                        <td><a href="{{ path('sky_test_teacher_index', {'id': teacher.id}) }}">{{ teacher.name }}</a></td>
-                        <td>{{ teacher.students.count }}</td>
-                    </tr>
-                {% endfor %}
+                    {% for student in students.iterator %}
+                        <tr>
+                            <td><a href="{{ path('sky_test_student_index', {'id': student.id}) }}">{{ student.name }}</a></td>
+                            <td>{{ student.teachers.count }}</td>
+                        </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
-                <p>Всего учителей в базе: {{ count }}</p>
+                <p>Всего учеников в базе: {{ count }}</p>
                 {% if count > pageSize %}
                     {% for i in 1..(count // pageSize + 1) %}
                         {% if page == i %}
@@ -44,7 +44,7 @@
                 {% endif %}
             {% else %}
                 <div class="row">
-                    Ваша база данных учителей пуста. <a href="{{ path('sky_test_teacher_new') }}">Начните её заполнение с создания учителя.</a>
+                    Ваша база данных учеников пуста. <a href="{{ path('sky_test_student_new') }}">Хотите добавить нового ученика?</a>
                 </div>
             {% endif %}
         </div>

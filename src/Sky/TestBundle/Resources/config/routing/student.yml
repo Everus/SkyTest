@@ -2,13 +2,39 @@ sky_test_student_new:
     path: /new
     defaults: { _controller: SkyTestBundle:Student:new  }
 
+sky_test_student_list:
+    path: /list/{page}/{pageSize}
+    defaults: { _controller: SkyTestBundle:Student:list, page: 1, pageSize: 10  }
+    requirements:
+        page:  \d+
+        pageSize: \d+
+
+sky_test_student_delete:
+    path: /{id}/delete/
+    defaults: { _controller: SkyTestBundle:Student:delete }
+    requirements:
+        id:  \d+
+
+sky_test_student_edit:
+    path: /{id}/edit
+    defaults: { _controller: SkyTestBundle:Student:edit }
+    requirements:
+        id:  \d+
+
+sky_test_student_unlink:
+    path: /{id}/unlink/{teacherId}
+    defaults: { _controller: SkyTestBundle:Student:unlink }
+    requirements:
+        id:  \d+
+        teacherId: \d+
+
 sky_test_student_link_create:
-    path: /{id}/link/{page}/{search}/{teacher}
+    path: /{id}/link/{page}/{search}/{teacherId}
     defaults: { _controller: SkyTestBundle:Student:linkCreate, page: 1, search: ''  }
     requirements:
         id:  \d+
         page: \d+
-        teacher:  \d+
+        teacherId:  \d+
 
 sky_test_student_link:
     path: /{id}/link/{page}/{search}

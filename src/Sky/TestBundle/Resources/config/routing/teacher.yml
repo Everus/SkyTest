@@ -2,8 +2,34 @@ sky_test_teacher_new:
     path: /new
     defaults: { _controller: SkyTestBundle:Teacher:new  }
 
+sky_test_teacher_list:
+    path: /list/{page}/{pageSize}
+    defaults: { _controller: SkyTestBundle:Teacher:list, page: 1, pageSize: 10  }
+    requirements:
+        page:  \d+
+        pageSize: \d+
+
+sky_test_teacher_delete:
+    path: /{id}/delete/
+    defaults: { _controller: SkyTestBundle:Teacher:delete }
+    requirements:
+        id:  \d+
+
+sky_test_teacher_edit:
+    path: /{id}/edit
+    defaults: { _controller: SkyTestBundle:Teacher:edit }
+    requirements:
+        id:  \d+
+
+sky_test_teacher_unlink:
+    path: /{id}/unlink/{studentId}
+    defaults: { _controller: SkyTestBundle:Teacher:unlink }
+    requirements:
+        id:  \d+
+        studentId: \d+
+
 sky_test_teacher_link_create:
-    path: /{id}/link/{page}/{search}/{student}
+    path: /{id}/link/{page}/{search}/{studentId}
     defaults: { _controller: SkyTestBundle:Teacher:linkCreate, page: 1, search: '' }
     requirements:
         id:  \d+

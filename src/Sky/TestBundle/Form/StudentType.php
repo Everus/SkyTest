@@ -7,8 +7,8 @@ class StudentType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-            ->add('name')
-            ->add('save', 'submit');
+            ->add('name', 'text', array('label' => 'Имя ученика:'))
+            ->add('save', 'submit', array('label' => 'Сохранить'));
     }
 
     public function getName() {

@@ -1,11 +1,59 @@
 {% extends 'SkyTestBundle::layout.html.twig' %}
 
+{% block title %}
+    Sky | Система учета | Учитель {{ teacher.name }} | Подбор учеников
+{% endblock %}
+
 {% block body %}
-    <div class="row">
-        {% for student in students.iterator %}
-            {{ student.name }}
+    <div class="large-12 columns">
+        {% if count >0 %}
+            {{ block('students_list') }}
         {% else %}
-            <p>Этот учитель обучает всех возможных учеников <a href="{{ path('sky_test_student_new') }}">хотите создать нового ученика?</a></p>
-        {% endfor %}
+            <div class="row">
+                <p>Нет доступных для этого ученика учителей, <a href="{{ path('sky_test_teacher_new') }}">хотите добавить нового учителя в базу?</a></p>
+            </div>
+        {% endif %}
     </div>
+{% endblock %}
+
+{% block students_list %}
+    <div class="row">
+        <table>
+            <caption>Список возможных учеников для учителя <a href="{{ path('sky_test_teacher_index', {'id': teacher.id}) }}">{{ teacher.name }}</a>:</caption>
+            <thead>
+            <tr>
+                <th width="300">Имя:</th>
+                <th>Количество учителей:</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for student in students.iterator %}
+                <tr>
+                    <td>{{ student.name }}</td>
+                    <td>{{ student.teachers.count }}</td>
+                    <td><a class="button tiny" href="{{ path('sky_test_teacher_link_create', {'id': teacher.id, 'page': page, 'search': '1', 'studentId': student.id}) }}">Назначить</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% if count > pageSize %}
+            {{ block('pages') }}
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block pages %}
+    <p>
+        Страницы:
+        {% for i in 1..(count // pageSize + 1) %}
+            {% if page == i %}
+                {{ i }}
+            {% else %}
+                <a href="{{ path('sky_test_teacher_link', {'id': teacher.id, 'page': i}) }}">
+                    {{ i }}
+                </a>
+            {% endif %}
+        {% endfor %}
+    </p>
 {% endblock %}

@@ -74,6 +74,7 @@ class Student
     public function addTeacher(\Sky\TestBundle\Entity\Teacher $teachers)
     {
         $this->teachers[] = $teachers;
+        $teachers->getStudents()->add($this);
 
         return $this;
     }
@@ -86,6 +87,7 @@ class Student
     public function removeTeacher(\Sky\TestBundle\Entity\Teacher $teachers)
     {
         $this->teachers->removeElement($teachers);
+        $teachers->getStudents()->removeElement($this);
     }
 
     /**

@@ -16,4 +16,5 @@ Sky\TestBundle\Entity\Teacher:
       students:
         targetEntity: Student
         mappedBy: teachers
+        cascade: ["persist", "remove"]
     lifecycleCallbacks: {  }

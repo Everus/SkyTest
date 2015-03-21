@@ -1,6 +1,6 @@
 sky_test_homepage:
     path:     /{page}/{pageSize}
-    defaults: { _controller: SkyTestBundle:Default:index, page: 1, pageSize: 10  }
+    defaults: { _controller: SkyTestBundle:Teacher:list, page: 1, pageSize: 10  }
     requirements:
         page:  \d+
         pageSize: \d+

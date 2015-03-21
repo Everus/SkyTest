@@ -1,16 +1,57 @@
 {% extends 'SkyTestBundle::layout.html.twig' %}
 
+{% block title %}
+    Sky | Система учета | Учитель {{ teacher.name }}
+{% endblock %}
+
 {% block body %}
     <div class="large-12 columns">
-        <div class="row">
+        {{ block('info') }}
+        {{ block('students') }}
+    </div>
+{% endblock %}
 
-        </div>
-        <div class="row">
-            {% for student in teacher.students.iterator %}
-                {{ sturent.name }}
-            {% else %}
-                <p>У этого учителя нет учеников, <a href="{{ path('sky_test_teacher_link', {'id': teacher.id}) }}">хотите добавить?</a></p>
-            {% endfor %}
+{% block info %}
+    <div class="row">
+        <h3>Информация об учителе.</h3>
+    </div>
+    <div class="row">
+        <div class="panel">
+            <p>Имя: {{ teacher.name }}</p>
+            <p>Количество учителей: {{ teacher.students.count }}</p>
+            <a class="button tiny" href="{{ path('sky_test_teacher_edit', {'id': teacher.id}) }}">Редактировать</a>
+            <a class="button tiny" href="{{ path('sky_test_teacher_link', {'id': teacher.id}) }}">Назначить учеников</a>
+            <a class="button tiny alert" href="{{ path('sky_test_teacher_delete', {'id': teacher.id}) }}">Удалить</a>
         </div>
     </div>
+{% endblock %}
+
+{% block students %}
+    {% if teacher.students.count >0 %}
+        <div class="row">
+            <table>
+                <caption>Список учеников учителя {{ teacher.name }}:</caption>
+                <thead>
+                <tr>
+                    <th width="300">Имя:</th>
+                    <th>Количество учителей:</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for student in teacher.students.iterator %}
+                    <tr>
+                        <td><a href="{{ path('sky_test_student_index', {'id': student.id}) }}">{{ student.name }}</a></td>
+                        <td>{{ student.teachers.count }}</td>
+                        <td><a class="button tiny alert" href="{{ path('sky_test_teacher_unlink', {'id': teacher.id, 'studentId': student.id}) }}">Удалить</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="row">
+            <p>У этого учителя нет учеников, <a href="{{ path('sky_test_teacher_link', {'id': teacher.id}) }}">хотите добавить?</a></p>
+        </div>
+    {% endif %}
 {% endblock %}
