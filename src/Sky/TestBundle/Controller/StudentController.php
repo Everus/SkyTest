@@ -40,7 +40,7 @@ class StudentController extends Controller
     }
 
     public function linkCreateAction($id, $page = 1, $search, $teacherId) {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $student = $em->getRepository('SkyTestBundle:Student')
             ->find($id);
         if(!$student) {
@@ -69,7 +69,7 @@ class StudentController extends Controller
     }
 
     public function linkAction($id, $page, $search) {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $student = $em
             ->getRepository('SkyTestBundle:Student')
             ->find($id);

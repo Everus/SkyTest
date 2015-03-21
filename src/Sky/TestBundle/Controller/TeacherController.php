@@ -45,7 +45,7 @@ class TeacherController extends Controller
     }
 
     public function linkAction($id, $page, $search) {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $teacher = $em
             ->getRepository('SkyTestBundle:Teacher')
             ->find($id);
@@ -78,7 +78,7 @@ class TeacherController extends Controller
     }
 
     public function linkCrateAction($id, $page, $search, $studentId) {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $teacher = $em->getRepository('SkyTestBundle:Teacher')
             ->find($id);
         if(!$teacher) {

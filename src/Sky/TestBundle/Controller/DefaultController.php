@@ -14,7 +14,7 @@ class DefaultController extends Controller
 
         $query = $this
             ->getDoctrine()
-            ->getEntityManager()
+            ->getManager()
             ->createQuery($query);
 
 
