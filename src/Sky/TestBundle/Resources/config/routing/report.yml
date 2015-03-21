@@ -1,0 +1,6 @@
+sky_test_report_max_pair:
+    path: /max_pair/{page}/{pageSize}
+    defaults: { _controller: SkyTestBundle:Report:maxPair, page: 1, pageSize: 10 }
+    requirements:
+        page:  \d+
+        pageSize: \d+

@@ -1,0 +1,49 @@
+{% extends 'SkyTestBundle::layout.html.twig' %}
+
+{% block title %}
+    Sky | Система учета | Отчеты | Пары учителей с максимальным количеством общих студентов
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="large-12 columns">
+            {% if count > 0 %}
+                <table>
+                    <caption>Список пар учителей учителей:</caption>
+                    <thead>
+                    <tr>
+                        <th width="300">Имя первого учителя</th>
+                        <th width="300">Имя второго учителя</th>
+                        <th>Количество общих учеников учеников</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for pair in teachers %}
+                            <tr>
+                                <td><a href="{{ path('sky_test_teacher_index', {'id': pair.first_teacher_id}) }}">{{ pair.first_teacher_name }}</a></td>
+                                <td><a href="{{ path('sky_test_teacher_index', {'id': pair.second_teacher_id}) }}">{{ pair.second_teacher_name }}</a></td>
+                                <td>{{ pair.cnt }}</td>
+                            </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <p>Всего учителей в базе: {{ count }}</p>
+                {% if count > pageSize %}
+                    {% for i in 1..(count // pageSize + 1) %}
+                        {% if page == i %}
+                            {{ i }}
+                        {% else %}
+                            <a href="{{ path('sky_test_report_max_pair', { 'page': i, 'pageSize': pageSize }) }}">
+                                {{ i }}
+                            </a>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% else %}
+                <div class="row">
+                    Ваша база данных учителей пуста. <a href="{{ path('sky_test_teacher_new') }}">Начните её заполнение с создания учителя.</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

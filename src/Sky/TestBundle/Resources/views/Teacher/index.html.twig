@@ -18,7 +18,7 @@
     <div class="row">
         <div class="panel">
             <p>Имя: {{ teacher.name }}</p>
-            <p>Количество учителей: {{ teacher.students.count }}</p>
+            <p>Количество учеников: {{ teacher.students.count }}</p>
             <a class="button tiny" href="{{ path('sky_test_teacher_edit', {'id': teacher.id}) }}">Редактировать</a>
             <a class="button tiny" href="{{ path('sky_test_teacher_link', {'id': teacher.id}) }}">Назначить учеников</a>
             <a class="button tiny alert" href="{{ path('sky_test_teacher_delete', {'id': teacher.id}) }}">Удалить</a>

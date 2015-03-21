@@ -14,3 +14,7 @@ sky_test_student:
 sky_test_teacher:
     resource: "@SkyTestBundle/Resources/config/routing/teacher.yml"
     prefix: /teacher/
+
+sky_test_report:
+    resource: "@SkyTestBundle/Resources/config/routing/report.yml"
+    prefix: /report/

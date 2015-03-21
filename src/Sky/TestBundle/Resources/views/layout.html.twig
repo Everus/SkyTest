@@ -24,6 +24,12 @@
             {% block navigation %}
             <ul class="right">
                 <li class="has-dropdown">
+                    <a>Отчеты</a>
+                    <ul class="dropdown">
+                        <li><a href="{{ path('sky_test_report_max_pair') }}">Общие ученики</a></li>
+                    </ul>
+                </li>
+                <li class="has-dropdown">
                     <a>Учителя</a>
                     <ul class="dropdown">
                         <li><a href="{{ path('sky_test_homepage') }}">Список</a></li>
