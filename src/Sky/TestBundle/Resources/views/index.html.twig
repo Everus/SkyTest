@@ -17,8 +17,8 @@
                     <caption>Список учителей:</caption>
                     <thead>
                         <tr>
-                            <th width="300">Имя учителя</th>
-                            <th>Количество учеников</th>
+                            <th width="300"><a href="{{ block('name_sort_link') }}">Имя учителя</a></th>
+                            <th><a href="{{ block('count_sort_link') }}">Количество учеников</a></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -36,7 +36,7 @@
                         {% if page == i %}
                             {{ i }}
                         {% else %}
-                            <a href="{{ path('sky_test_homepage', {'page': i, 'pageSize': pageSize}) }}">
+                            <a href="{{ path('sky_test_homepage', { 'page': i, 'pageSize': pageSize, 'sortField': sortField, 'sortDirection': sortDirection} ) }}">
                                 {{ i }}
                             </a>
                         {% endif %}
@@ -49,4 +49,20 @@
             {% endif %}
         </div>
     </div>
+{% endblock %}
+
+{% block name_sort_link %}
+    {% if sortField == 'name' and sortDirection == 'DESC' %}
+        {{ path( 'sky_test_homepage', {'page': page, 'pageSize': pageSize, 'sortField': sortField, 'sortDirection': 'ASC'} ) }}
+    {% else %}
+        {{ path( 'sky_test_homepage', {'page': page, 'pageSize': pageSize, 'sortField': 'name', 'sortDirection': 'DESC'} ) }}
+    {% endif %}
+{% endblock %}
+
+{% block count_sort_link %}
+    {% if sortField == 'count' and sortDirection == 'DESC' %}
+        {{ path( 'sky_test_homepage', {'page': page, 'pageSize': pageSize, 'sortField': sortField, 'sortDirection': 'ASC'} ) }}
+    {% else %}
+        {{ path( 'sky_test_homepage', {'page': page, 'pageSize': pageSize, 'sortField': 'count', 'sortDirection': 'DESC'} ) }}
+    {% endif %}
 {% endblock %}

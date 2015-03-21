@@ -134,11 +134,31 @@ class TeacherController extends Controller
         ));
     }
 
-    public function listAction($page = 1, $pageSize = 10)
+    public function listAction($page = 1, $pageSize = 10, $sortField = 'name', $sortDirection = 'DESC')
     {
         $query = '
-                SELECT t
-                FROM SkyTestBundle:Teacher t';
+                SELECT t, COUNT(s.id) AS HIDDEN cnt
+                FROM SkyTestBundle:Teacher t
+                LEFT OUTER JOIN t.students s
+                GROUP BY t.id';
+
+        switch ($sortField) {
+            case 'count':
+                $query.= ' ORDER BY cnt';
+                break;
+            case 'name':
+            default:
+                $query.= ' ORDER BY t.name';
+        }
+
+        switch ($sortDirection) {
+            case 'DESC':
+                $query.= ' DESC';
+                break;
+            case 'ASC':
+            default:
+                $query.= ' ASC';
+        }
 
         $query = $this
             ->getDoctrine()
@@ -155,6 +175,8 @@ class TeacherController extends Controller
             'count' => $count,
             'page' => $page,
             'pageSize' => $pageSize,
+            'sortField' => $sortField,
+            'sortDirection' => $sortDirection,
         );
         return $this->render('SkyTestBundle::index.html.twig', $data);
     }

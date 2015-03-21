@@ -1,9 +1,11 @@
 sky_test_homepage:
-    path:     /{page}/{pageSize}
-    defaults: { _controller: SkyTestBundle:Teacher:list, page: 1, pageSize: 10  }
+    path: /{page}/{pageSize}/{sortField}/{sortDirection}
+    defaults: { _controller: SkyTestBundle:Teacher:list, page: 1, pageSize: 10, sortField: 'name', sortDirection: 'ASC' }
     requirements:
         page:  \d+
         pageSize: \d+
+        sortField: name|count
+        sortDirection: ASC|DESC
 
 sky_test_student:
     resource: "@SkyTestBundle/Resources/config/routing/student.yml"

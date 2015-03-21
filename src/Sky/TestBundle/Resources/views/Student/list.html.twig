@@ -17,8 +17,8 @@
                     <caption>Список учителей:</caption>
                     <thead>
                     <tr>
-                        <th width="300">Имя ученика</th>
-                        <th>Количество учителей</th>
+                        <th width="300"><a href="{{ block('name_sort_link') }}">Имя ученика</a></th>
+                        <th><a href="{{ block('count_sort_link') }}">Количество учителей</a></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -49,4 +49,20 @@
             {% endif %}
         </div>
     </div>
+{% endblock %}
+
+{% block name_sort_link %}
+    {% if sortField == 'name' and sortDirection == 'DESC' %}
+        {{ path( 'sky_test_student_list', {'page': page, 'pageSize': pageSize, 'sortField': sortField, 'sortDirection': 'ASC'} ) }}
+    {% else %}
+        {{ path( 'sky_test_student_list', {'page': page, 'pageSize': pageSize, 'sortField': 'name', 'sortDirection': 'DESC'} ) }}
+    {% endif %}
+{% endblock %}
+
+{% block count_sort_link %}
+    {% if sortField == 'count' and sortDirection == 'DESC' %}
+        {{ path( 'sky_test_student_list', {'page': page, 'pageSize': pageSize, 'sortField': sortField, 'sortDirection': 'ASC'} ) }}
+    {% else %}
+        {{ path( 'sky_test_student_list', {'page': page, 'pageSize': pageSize, 'sortField': 'count', 'sortDirection': 'DESC'} ) }}
+    {% endif %}
 {% endblock %}

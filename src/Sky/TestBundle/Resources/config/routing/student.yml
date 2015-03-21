@@ -3,11 +3,13 @@ sky_test_student_new:
     defaults: { _controller: SkyTestBundle:Student:new  }
 
 sky_test_student_list:
-    path: /list/{page}/{pageSize}
-    defaults: { _controller: SkyTestBundle:Student:list, page: 1, pageSize: 10  }
+    path: /list/{page}/{pageSize}/{sortField}/{sortDirection}
+    defaults: { _controller: SkyTestBundle:Student:list, page: 1, pageSize: 10, sortField: 'name', sortDirection: 'DESC'  }
     requirements:
         page:  \d+
         pageSize: \d+
+        sortField: name|count
+        sortDirection: ASC|DESC
 
 sky_test_student_delete:
     path: /{id}/delete/
