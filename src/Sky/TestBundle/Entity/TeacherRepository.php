@@ -3,6 +3,7 @@
 namespace Sky\TestBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\ResultSetMapping;
 
 /**
  * TeacherRepository
@@ -12,6 +13,78 @@ use Doctrine\ORM\EntityRepository;
  */
 class TeacherRepository extends EntityRepository
 {
+    public function countPairs() {
+        $em = $this->getEntityManager();
+
+        $rsm = new ResultSetMapping;
+        $rsm->addScalarResult('cnt', 'cnt');
+
+        $sql = '
+                SELECT
+                  COUNT(t1.id) as cnt
+                FROM `Teacher` as t1
+                INNER JOIN `Teacher` as t2 ON t1.id != t2.id AND t1.id < t2.id
+                ORDER BY cnt DESC';
+
+        $query = $em
+            ->createNativeQuery($sql, $rsm);
+
+        $count = $query->getSingleScalarResult();
+
+        return $count;
+    }
+
+    public function findPairs($firstResult = null, $maxResults = null) {
+        $em = $this->getEntityManager();
+
+        $rsm = new ResultSetMapping;
+        $rsm->addScalarResult('cnt', 'cnt');
+        $rsm->addScalarResult('first_teacher_id', 'first_teacher_id');
+        $rsm->addScalarResult('second_teacher_id', 'second_teacher_id');
+
+        $sql = '
+                SELECT
+                t1.id as first_teacher_id,
+                t2.id as second_teacher_id,
+                (
+                    SELECT COUNT(s.student_id) FROM student_teacher s
+                    WHERE s.teacher_id = t1.id AND s.student_id IN (
+                        SELECT student_id
+                        FROM student_teacher s2
+                        WHERE s2.teacher_id = t2.id AND s.student_id=s2.student_id))
+                as cnt
+                FROM `Teacher` as t1
+                INNER JOIN `Teacher` as t2 ON t1.id != t2.id AND t1.id < t2.id
+                ORDER BY cnt DESC';
+
+        if($firstResult !== null && $maxResults !== null) {
+            $sql.= ' LIMIT ?, ?';
+        }
+
+        $query = $em
+            ->createNativeQuery($sql, $rsm);
+
+        if($firstResult !== null && $maxResults !== null) {
+            $query
+                ->setParameter(1, $firstResult)
+                ->setParameter(2, $maxResults);
+        }
+
+        $teachers = $query->getResult();
+
+        $result = array();
+
+        foreach($teachers as $pair) {
+            $result[] = array(
+                'first_teacher' => $this->find($pair['first_teacher_id']),
+                'second_teacher' => $this->find($pair['second_teacher_id']),
+                'count' => $pair['cnt']
+            );
+        }
+
+        return $result;
+    }
+
     public function findRandom()
     {
         $em = $this->getEntityManager();
