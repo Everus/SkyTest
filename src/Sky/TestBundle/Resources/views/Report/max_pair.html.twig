@@ -5,6 +5,18 @@
 {% endblock %}
 
 {% block body %}
+    <div class="row ">
+        <div class="large-4 columns right right-align">
+            Показывать на странице:
+            {% for i in [10,15,20,25] %}
+                {% if i == pageSize %}
+                    {{ i }}
+                {% else %}
+                    <a href="{{ path('sky_test_report_max_pair', { 'page': page, 'pageSize': i} ) }}">{{ i }}</a>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
     <div class="row">
         <div class="large-12 columns">
             {% if count > 0 %}
@@ -12,9 +24,9 @@
                     <caption>Список пар учителей учителей:</caption>
                     <thead>
                     <tr>
-                        <th width="300">Имя первого учителя</th>
-                        <th width="300">Имя второго учителя</th>
-                        <th>Количество общих учеников учеников</th>
+                        <th width="350">Имя первого учителя</th>
+                        <th width="350">Имя второго учителя</th>
+                        <th width="300">Количество общих учеников учителя</th>
                     </tr>
                     </thead>
                     <tbody>

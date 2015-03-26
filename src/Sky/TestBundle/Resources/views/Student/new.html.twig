@@ -5,14 +5,12 @@
 {% endblock %}
 
 {% block body %}
-    <div class="row">
+    <div class="row panel">
         <div class="large-12 columns">
             <h3>Создание нового ученика.</h3>
         </div>
-    </div>
-    <div class="row">
-        <div class="medium-6 columns">
-            <div class="row">
+        <div class="row">
+            <div class="medium-6 columns">
                 {{ form_start(form) }}
                 {{ form_widget(form) }}
                 {{ form_end(form) }}
