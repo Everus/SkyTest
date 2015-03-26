@@ -1,0 +1,60 @@
+{% extends 'SkyTestBundle::layout.html.twig' %}
+
+{% block title %}
+    Sky | Система учета | Отчеты | Сравнение двух учителей
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="large-6 columns">
+            <div class="panel">
+                {% set teacher = teachers.first %}
+                {{ block('teacherInfo') }}
+            </div>
+        </div>
+        <div class="large-6 columns">
+            <div class="panel">
+                {% set teacher = teachers.second %}
+                {{ block('teacherInfo') }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-12 columns">
+            <table>
+                <caption>Сравнение учиников:</caption>
+                <thead>
+                    <tr>
+                        <th width="500">Ученики {{ teachers.first.name }}</th>
+                        <th width="500">Ученики {{ teachers.second.name }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students.0 %}
+                        <tr>
+                            <td><a href="{{ path('sky_test_student_index', {'id': student.id}) }}">{{ student.name }}</a></td>
+                            <td><a href="{{ path('sky_test_student_index', {'id': student.id}) }}">{{ student.name }}</a></td>
+                        </tr>
+                    {% endfor %}
+                    {% for student in students.1 %}
+                        <tr>
+                            <td><a href="{{ path('sky_test_student_index', {'id': student.id}) }}">{{ student.name }}</a></td>
+                            <td></td>
+                        </tr>
+                    {% endfor %}
+                    {% for student in students.2 %}
+                        <tr>
+                            <td></td>
+                            <td><a href="{{ path('sky_test_student_index', {'id': student.id}) }}">{{ student.name }}</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block teacherInfo %}
+    <p>Имя: <a href="{{ path('sky_test_teacher_index', {'id': teacher.id}) }}">{{ teacher.name }}</a></p>
+    <p>Количество учеников: {{ teacher.students.count }}</p>
+{% endblock %}

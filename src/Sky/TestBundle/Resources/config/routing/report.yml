@@ -4,3 +4,10 @@ sky_test_report_max_pair:
     requirements:
         page:  \d+
         pageSize: \d+
+
+sky_test_report_teacher_pair:
+    path: /teacher/pair/{firstId}/{secondId}
+    defaults: { _controller: SkyTestBundle:Report:teacherPair }
+    requirements:
+        firstId: \d+
+        secondId: \d+

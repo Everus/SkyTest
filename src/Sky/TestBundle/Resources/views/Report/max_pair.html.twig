@@ -20,9 +20,9 @@
                     <tbody>
                     {% for pair in teachers %}
                             <tr>
-                                <td><a href="{{ path('sky_test_teacher_index', {'id': pair.first_teacher.id}) }}">{{ pair.first_teacher.name }}</a></td>
-                                <td><a href="{{ path('sky_test_teacher_index', {'id': pair.second_teacher.id}) }}">{{ pair.second_teacher.name }}</a></td>
-                                <td>{{ pair.count }}</td>
+                                <td><a href="{{ path('sky_test_report_teacher_pair', {'firstId': pair.first_teacher.id, 'secondId':pair.second_teacher.id}) }}">{{ pair.first_teacher.name }}</a></td>
+                                <td><a href="{{ path('sky_test_report_teacher_pair', {'firstId': pair.first_teacher.id, 'secondId':pair.second_teacher.id}) }}">{{ pair.second_teacher.name }}</a></td>
+                                <td><a href="{{ path('sky_test_report_teacher_pair', {'firstId': pair.first_teacher.id, 'secondId':pair.second_teacher.id}) }}">{{ pair.count }}</a></td>
                             </tr>
                     {% endfor %}
                     </tbody>

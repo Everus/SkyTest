@@ -32,4 +32,36 @@ class ReportController extends Controller
         );
         return $this->render('SkyTestBundle:Report:max_pair.html.twig', $data);
     }
+
+    public function teacherPairAction($firstId, $secondId) {
+        $teacherRep = $this->getDoctrine()->getManager()->getRepository('SkyTestBundle:Teacher');
+
+        $teachers = array(
+            'first' => $teacherRep->find($firstId),
+            'second' => $teacherRep->find($secondId),
+        );
+
+        if (!$teachers['first'] || !$teachers['second']) {
+            throw $this->createNotFoundException('Запрошенный учитель не найден.');
+        }
+
+        $students = array();
+
+        $students[] = $teachers['first']->getStudents()->filter(function($item) use ($teachers) {
+            return $teachers['second']->getStudents()->contains($item);
+        });
+
+        $students[] = $teachers['first']->getStudents()->filter(function($item) use ($teachers) {
+            return !$teachers['second']->getStudents()->contains($item);
+        });
+
+        $students[] = $teachers['second']->getStudents()->filter(function($item) use ($teachers) {
+            return !$teachers['first']->getStudents()->contains($item);
+        });
+
+        return $this->render('SkyTestBundle:Report:teacher_pair.html.twig', array(
+            'teachers' => $teachers,
+            'students' => $students,
+        ));
+    }
 }
